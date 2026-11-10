@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5eefe">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Нямка">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Нямка</title>
+<style>
+:root{--bg:#f5eefe;--ink:#24202b;--muted:#80788b;--pink:#ffd9e9;--lav:#e4d7ff;--card:#fff;--accent:#8d6be8}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 20% 5%,#fff 0,transparent 34%),var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);min-height:100vh}
+.app{max-width:520px;margin:auto;padding:calc(18px + env(safe-area-inset-top)) 18px calc(24px + env(safe-area-inset-bottom))}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}h1{font-size:28px;margin:0;font-weight:900;letter-spacing:-1px}.sub{color:var(--muted);font-size:13px;margin-top:3px}
+.pill{background:#fff;border-radius:20px;padding:9px 12px;font-weight:800;font-size:13px;box-shadow:0 5px 18px #49336a12}
+.stage{position:relative;overflow:hidden;border-radius:30px;background:linear-gradient(145deg,#eadfff,#ffe5ef);height:360px;display:grid;place-items:center;box-shadow:0 18px 45px #57416a1a}
+.spark{position:absolute;color:#fff;font-size:24px;animation:twinkle 2s ease-in-out infinite}.s1{top:42px;left:42px}.s2{right:46px;top:76px;animation-delay:.7s}.s3{bottom:55px;right:60px;animation-delay:1.2s}
+.shadow{position:absolute;width:150px;height:24px;background:#5a486d20;border-radius:50%;bottom:49px;filter:blur(5px);animation:shadow 2.6s ease-in-out infinite}
+.pet{width:190px;height:205px;position:relative;animation:bob 2.6s ease-in-out infinite;filter:drop-shadow(0 13px 9px #3d2b4a20)}
+.body{position:absolute;inset:12px 7px 0;background:linear-gradient(145deg,#393640,#111016 72%);border-radius:48% 48% 42% 42% / 42% 42% 52% 52%;clip-path:path("M 10 190 C 3 135 8 55 47 20 C 76 -5 120 0 149 26 C 185 59 190 135 180 190 C 150 207 40 207 10 190 Z")}
+.ear{position:absolute;top:5px;width:43px;height:55px;background:#24222b;border-radius:70% 20% 70% 20%;z-index:2}.ear.left{left:25px;transform:rotate(-25deg)}.ear.right{right:25px;transform:scaleX(-1) rotate(-25deg)}
+.face{position:absolute;top:89px;left:0;right:0;display:flex;justify-content:center;gap:34px;z-index:3}
+.eye{width:12px;height:17px;border-radius:50%;background:#fff;position:relative;animation:blink 4.8s infinite}.eye:after{content:"";position:absolute;width:4px;height:5px;border-radius:50%;background:#d8caff;top:3px;right:2px}
+.cheek{position:absolute;top:120px;width:20px;height:9px;border-radius:50%;background:#9b6a9d;opacity:.5}.cheek.l{left:38px}.cheek.r{right:38px}
+.mouth{position:absolute;top:116px;left:calc(50% - 5px);width:10px;height:7px;border-bottom:2px solid #fff;border-radius:50%;z-index:3}
+.pet.happy{animation:happy .55s ease-in-out 2}.pet.petted{animation:petted .45s ease-out}.pet.sleepy .eye{height:3px;border-radius:4px;transform:translateY(7px)}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-12px) rotate(1deg)}}
+@keyframes shadow{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(.82);opacity:.35}}
+@keyframes blink{0%,46%,50%,100%{transform:scaleY(1)}48%{transform:scaleY(.08)}}
+@keyframes twinkle{0%,100%{opacity:.45;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
+@keyframes happy{0%,100%{transform:translateY(0) scale(1)}35%{transform:translateY(-30px) scale(1.06)}70%{transform:translateY(-8px) scale(.98)}}
+@keyframes petted{0%{transform:rotate(0)}25%{transform:rotate(-9deg)}55%{transform:rotate(8deg)}100%{transform:rotate(0)}}
+.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:14px 0}
+button{border:0;border-radius:17px;padding:14px 8px;font-weight:800;font-size:14px;background:#fff;color:var(--ink);box-shadow:0 6px 16px #49336a10;cursor:pointer}
+button.primary{background:#2b2632;color:white}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 0}
+.card{background:#fff;border-radius:20px;padding:14px;box-shadow:0 6px 20px #49336a0b}.stathead{display:flex;justify-content:space-between;font-size:13px;font-weight:800}.bar{height:8px;background:#f0edf4;border-radius:8px;margin-top:10px;overflow:hidden}.fill{height:100%;width:80%;background:linear-gradient(90deg,#9c80ef,#f5a8cf);border-radius:8px;transition:width .3s}
+.section{font-size:18px;font-weight:900;margin:22px 2px 10px}.taskrow{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid #f1edf5}.taskrow:last-child{border:0}.taskrow input{width:19px;height:19px;accent-color:#8d6be8}.taskrow.done span{text-decoration:line-through;color:#aaa}
+.add{display:flex;gap:8px;margin-top:10px}.add input{min-width:0;flex:1;border:0;border-radius:14px;padding:13px;background:#fff;font-size:14px;outline:none}.add button{padding:0 16px;background:#e4d7ff}
+.note{text-align:center;color:var(--muted);font-size:11px;margin:20px 0 4px}
+</style>
+</head>
+<body><main class="app">
+<header><div><h1>Нямка <span>🖤</span></h1><div class="sub">Твой маленький чёрный друг</div></div><div class="pill" id="clock">--:--</div></header>
+<section class="stage" aria-label="Нямка">
+<div class="spark s1">✦</div><div class="spark s2">✧</div><div class="spark s3">✦</div>
+<div class="shadow"></div>
+<div class="pet" id="pet"><div class="ear left"></div><div class="ear right"></div><div class="body"></div><div class="face"><i class="eye"></i><i class="eye"></i></div><div class="cheek l"></div><div class="cheek r"></div><div class="mouth"></div></div>
+</section>
+<div class="actions"><button class="primary" onclick="petAction()">♡ Погладить</button><button onclick="feedAction()">🍪 Покормить</button><button onclick="playAction()">✦ Играть</button></div>
+<div class="stats">
+<div class="card"><div class="stathead"><span>🍪 Сытость</span><span id="foodN">75%</span></div><div class="bar"><div class="fill" id="food" style="width:75%"></div></div></div>
+<div class="card"><div class="stathead"><span>💜 Радость</span><span id="joyN">80%</span></div><div class="bar"><div class="fill" id="joy" style="width:80%"></div></div></div>
+</div>
+<div class="section">Задачи на сегодня</div>
+<div class="card" id="tasks">
+<label class="taskrow"><input type="checkbox"><span>Сделать небольшую разминку</span></label>
+<label class="taskrow"><input type="checkbox"><span>Выполнить домашние задания</span></label>
+<label class="taskrow"><input type="checkbox"><span>Немного отдохнуть</span></label>
+</div>
+<div class="add"><input id="newTask" placeholder="Добавить задачу…" maxlength="70"><button onclick="addTask()">＋</button></div>
+<div class="note">Нямка хранит задачи и настроение на этом устройстве</div>
+</main>
+<script>
+const pet=document.getElementById('pet');let food=75,joy=80;
+function update(){for(const [id,val] of [['food',food],['joy',joy]]){document.getElementById(id).style.width=val+'%';document.getElementById(id+'N').textContent=val+'%'}}
+function animate(cls){pet.classList.remove('happy','petted');void pet.offsetWidth;pet.classList.add(cls);setTimeout(()=>pet.classList.remove(cls),1200)}
+function petAction(){joy=Math.min(100,joy+8);animate('petted');update()}
+function feedAction(){food=Math.min(100,food+15);joy=Math.min(100,joy+3);animate('happy');update()}
+function playAction(){joy=Math.min(100,joy+14);food=Math.max(0,food-5);animate('happy');update()}
+function addTask(){const input=document.getElementById('newTask');const v=input.value.trim();if(!v)return;const label=document.createElement('label');label.className='taskrow';const cb=document.createElement('input');cb.type='checkbox';const span=document.createElement('span');span.textContent=v;label.append(cb,span);document.getElementById('tasks').append(label);input.value='';wireTasks()}
+function wireTasks(){document.querySelectorAll('.taskrow input').forEach(cb=>{cb.onchange=()=>cb.parentElement.classList.toggle('done',cb.checked)})}
+function tick(){const d=new Date();document.getElementById('clock').textContent=d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'})}tick();setInterval(tick,15000);wireTasks();if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}
+</script></body></html>
